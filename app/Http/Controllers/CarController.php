@@ -134,7 +134,7 @@ class CarController extends Controller
             $car->save();
         }
 
-        return redirect()->route('cars.index')->with('success', 'Car updated successfully.');
+        return redirect()->route('admin.cars.index')->with('success', 'Car updated successfully.');
     }
 
     /**

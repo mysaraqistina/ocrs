@@ -18,9 +18,78 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        body {
+            /* Deep luxury gradient with gold accent */
+            background: linear-gradient(135deg, #181818 0%, #232526 60%, #bfa14a 120%);
+            min-height: 100vh;
+            position: relative;
+            color: #f5f5f5;
+        }
+
+        /* Subtle diamond pattern overlay for depth */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
+            opacity: 0.12;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Premium card styling */
+        .card, .bg-gradient {
+            border-radius: 1.5rem !important;
+            box-shadow: 0 8px 32px 0 rgba(191, 161, 74, 0.18);
+            background: rgba(35, 37, 38, 0.97) !important;
+            border: 1px solid #bfa14a33;
+            color: #f5f5f5;
+        }
+
+        /* Gold accent for headings and brand */
+        .navbar-brand, .display-4, .fw-bold, .card-title {
+            color: #bfa14a !important;
+            letter-spacing: 1px;
+        }
+
+        /* Gold accent for nav links on hover */
+        .navbar-dark .navbar-nav .nav-link:hover,
+        .navbar-dark .navbar-nav .nav-link.active {
+            color: #bfa14a !important;
+            text-shadow: 0 1px 8px #bfa14a33;
+        }
+
+        /* Gold buttons for CTAs */
+        .btn-warning, .btn-warning:focus, .btn-warning:active {
+            background-color: #bfa14a !important;
+            border-color: #bfa14a !important;
+            color: #232526 !important;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 12px #bfa14a33;
+        }
+        .btn-warning:hover {
+            background-color: #a88b32 !important;
+            border-color: #a88b32 !important;
+            color: #fff !important;
+        }
+
+        /* Carousel image styling */
         .carousel-inner img {
-            height: 400px;
+            height: 350px;
             object-fit: cover;
+            border-radius: 1.5rem;
+        }
+
+        /* Carousel caption styling */
+        .carousel-caption {
+            background: rgba(35, 37, 38, 0.7) !important;
+            border-radius: 1rem;
+            color: #bfa14a !important;
+            font-weight: 500;
         }
     </style>
 </head>
@@ -43,10 +112,10 @@
                             <a class="nav-link" href="#">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Gallery</a>
+                            <a class="nav-link" href="#gallery">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="#contact">Contact</a>
                         </li>
                     </ul>
 

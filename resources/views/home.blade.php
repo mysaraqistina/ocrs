@@ -4,13 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col-12 d-flex align-items-center mb-4">
-            <h2 class="mb-0">Welcome, {{ $customer->name ?? 'Customer' }}!</h2>
-            <a href="{{ route('bookings.index', ['customer_id' => $customer->id]) }}"
-               class="btn btn-primary ms-auto px-2 py-2 d-inline-flex align-items-center gap-2 shadow-sm rounded-pill"
-               style="font-size: 1rem;">
-                <i class="bi bi-journal-text" style="font-size: 1.2rem;"></i>
-                View My Bookings
-            </a>
+            <h4 class="mb-0">Welcome, {{ $customer->name ?? 'Customer' }}!</h4>
         </div>
     </div>
 
@@ -23,7 +17,7 @@
                         Start Date: {{ $latestBooking->start_date }}<br>
                         End Date: {{ $latestBooking->end_date }}<br>
                         Car: {{ $latestBooking->car->brand ?? 'N/A' }} {{ $latestBooking->car->model ?? 'N/A' }}<br>
-                        Status: {{ $latestBooking->status == 'pending' ? 'Pending' : ($latestBooking->status == 'confirmed' ? 'Confirmed' : 'Cancelled') }}<br>
+                        Status: {{ $latestBooking->status == 'pending' ? 'Pending' : ($latestBooking->status == 'approved' ? 'Confirmed' : 'Cancelled') }}<br>
                     @else
                         Start Date: N/A<br>
                         End Date: N/A<br>
@@ -35,7 +29,7 @@
         </div>
     </div>
 
-    <h3 class="mb-4">Browse Available Cars</h3>
+    <h5 class="mb-4">Browse Available Cars</h5>
     <form method="GET" action="{{ route('home') }}" class="row g-3 mb-4">
         <input type="hidden" name="customer_id" value="{{ $customer->id }}">
         <div class="col-md-3">
@@ -85,6 +79,11 @@
                          alt="{{ $car->brand }} {{ $car->model }}"
                          style="width: 100%; height: 180px; object-fit: cover;">
                     <div class="card-body d-flex flex-column">
+                        @if($errors->has('start_date'))
+                            <div class="alert alert-danger">
+                                {{ $errors->first('start_date') }}
+                            </div>
+                        @endif
                         <h5 class="card-title">{{ $car->brand }} {{ $car->model }}</h5>
                         <p class="card-text mb-2">
                             <span class="fw-bold">Branch:</span> {{ $car->branch->name }}<br>
@@ -103,7 +102,9 @@
                                 <label class="form-label">End Date</label>
                                 <input type="date" name="end_date" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-success w-100">Book Now</button>
+                            <button type="submit" class="btn btn-warning w-100 fw-bold">
+                                <i class="bi bi-calendar-plus"></i> Book Now
+                            </button>
                         </form>
                     </div>
                 </div>

@@ -11,6 +11,27 @@
         body {
             background: #fff;
             min-height: 100vh;
+            position: relative;
+            /* Add this for stacking context */
+            overflow-x: hidden;
+        }
+        /* Faded car background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('{{ asset('images/faded-car.jpeg') }}') no-repeat center center;
+            background-size: cover;
+            opacity: 0.80; /* Adjust for more/less fade */
+            z-index: 0;
+            pointer-events: none;
+        }
+        .login-container, .card {
+            position: relative;
+            z-index: 1;
         }
         .login-container {
             max-width: 400px;

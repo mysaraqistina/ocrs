@@ -10,10 +10,26 @@
         body {
             background: #fff;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
-        .register-container {
-            max-width: 400px;
-            margin: 60px auto;
+        /* Faded car background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: url('{{ asset('images/faded-car.jpeg') }}') no-repeat center center;
+            background-size: cover;
+            opacity: 0.80; /* Adjust for more/less fade */
+            z-index: 0;
+            pointer-events: none;
+        }
+        .register-container, .card {
+            position: relative;
+            z-index: 1;
         }
         .card {
             border-radius: 1.5rem;
@@ -48,8 +64,8 @@
     </nav>
     <!-- End Navbar -->
 
-    <div class="register-container">
-        <div class="card p-4">
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+        <div class="card p-4" style="max-width: 430px; width: 100%;">
             <div class="text-center">
                 <img src="{{ asset('images/car.png') }}" alt="Logo" class="brand-logo shadow">
                 <h2 class="fw-bold mb-2">Easy Car Enterprise</h2>
@@ -82,11 +98,10 @@
                     <label for="password" class="form-label"><i class="bi bi-lock"></i> Password</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-
                 <div class="mb-3">
                     <label for="password-confirm" class="form-label"><i class="bi bi-lock"></i> Confirm Password</label>
                     <input type="password" class="form-control" id="password-confirm" name="password_confirmation" required>
-               </div>
+                </div>
                 <button type="submit" class="btn w-100 py-2 fw-bold" style="background-color: #0d1e5b; color: #fff;">Register</button>
             </form>
             <div class="text-center mt-4">

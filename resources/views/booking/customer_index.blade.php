@@ -2,48 +2,15 @@
 
 @section('content')
 <div class="container">
-    <h2 class="mb-4">My Bookings</h2>
-    <a href="{{ route('home', ['customer_id' => $customer->id]) }}" class="btn btn-secondary mb-3">Back to Homepage</a>
-
-    {{-- Current Booking --}}
-    @if($currentBooking)
-        <div class="card mb-4">
-            <div class="card-header bg-primary text-white">Current Booking</div>
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-md-2">
-                        <img src="{{ $currentBooking->car->image ? asset('images/' . $currentBooking->car->image) : asset('images/default-car.png') }}" class="img-fluid rounded" alt="Car">
-                    </div>
-                    <div class="col-md-10">
-                        <h5>{{ $currentBooking->car->brand }} {{ $currentBooking->car->model }}</h5>
-                        <p>
-                            <strong>From:</strong> {{ date('d M Y', strtotime($currentBooking->start_date)) }}<br>
-                            <strong>To:</strong> {{ date('d M Y', strtotime($currentBooking->end_date)) }}<br>
-                            <strong>Status:</strong>
-                            @if($currentBooking->status == 'confirmed')
-                                <span class="badge bg-success">Confirmed</span>
-                            @elseif($currentBooking->status == 'pending')
-                                <span class="badge bg-warning text-dark">Pending</span>
-                            @elseif($currentBooking->status == 'cancelled')
-                                <span class="badge bg-danger">Cancelled</span>
-                            @else
-                                <span class="badge bg-secondary">{{ ucfirst($currentBooking->status) }}</span>
-                            @endif
-                        </p>
-                        @if($currentBooking->status == 'pending')
-                            <form action="{{ route('bookings.destroy', $currentBooking->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Cancel this booking?')">Cancel</button>
-                            </form>
-                        @endif
-                    </div>
-                </div>
-            </div>
-        </div>
-    @else
-        <div class="alert alert-info">No current booking.</div>
-    @endif
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">My Bookings</h2>
+        <a href="{{ route('home', ['customer_id' => $customer->id]) }}"
+           class="btn btn-warning btn-lg fw-bold rounded-pill shadow px-4 py-2"
+           style="font-size: 1.2rem;">
+            <i class="bi bi-arrow-left-circle me-2"></i>
+            Back to Homepage
+        </a>
+    </div>
 
     {{-- Upcoming Bookings --}}
     <div class="card mb-4">

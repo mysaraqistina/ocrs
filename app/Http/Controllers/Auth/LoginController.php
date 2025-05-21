@@ -68,10 +68,11 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $user = Customer::where('email', $request->email)->first();
+        $customer = Customer::where('email', $request->email)->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            session(['customer_id' => $user->id]);
+        if ($customer && Hash::check($request->password, $customer->password)) {
+            session(['customer_id' => $customer->id]);
+            session()->forget('admin_id');
             return redirect()->route('home');
         } else {
             return back()->withErrors([

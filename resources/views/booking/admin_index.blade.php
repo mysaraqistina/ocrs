@@ -2,11 +2,20 @@
 
 @section('content')
 <div class="container">
-    <h2 class="mb-4">All Bookings</h2>
-    <a href="{{ route('admin.index') }}" class="btn btn-secondary mb-3">Back to Admin Dashboard</a>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">All Bookings</h2>
+        <a href="{{ route('admin.index') }}"
+           class="btn btn-warning btn-lg fw-bold rounded-pill shadow px-4 py-2"
+           style="font-size: 1.1rem;">
+            <i class="bi bi-arrow-left-circle me-2"></i>
+            Back to Admin Dashboard
+        </a>
+    </div>
 
-    <div class="card">
-        <div class="card-header bg-primary text-white">Bookings List</div>
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white fw-bold fs-5">
+            <i class="bi bi-list-ul me-2"></i>Bookings List
+        </div>
         <div class="card-body">
             @if($bookings->count())
                 <div class="table-responsive">
@@ -49,14 +58,20 @@
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="action" value="approve">
-                                            <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('Approve this booking?')">Approve</button>
+                                            <button type="submit" class="btn btn-success btn-sm rounded-pill fw-bold shadow-sm me-2" onclick="return confirm('Approve this booking?')">
+                                                <i class="bi bi-check-circle me-1"></i> Approve
+                                            </button>
                                         </form>
                                         <form action="{{ route('admin.bookings.update', $booking->id) }}" method="POST" class="d-inline">
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="action" value="reject">
-                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Reject this booking?')">Reject</button>
+                                            <button type="submit" class="btn btn-danger btn-sm rounded-pill fw-bold shadow-sm" onclick="return confirm('Reject this booking?')">
+                                                <i class="bi bi-x-circle me-1"></i> Reject
+                                            </button>
                                         </form>
+                                    @else
+                                        <span class="text-muted">—</span>
                                     @endif
                                 </td>
                             </tr>

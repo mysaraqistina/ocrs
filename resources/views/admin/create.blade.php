@@ -51,8 +51,12 @@
             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
         </div>
 
-        <button type="submit" class="btn btn-success">Add Staff</button>
-        <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary">Cancel</a>
+        <button type="submit" class="btn btn-success fw-bold rounded-pill shadow px-4 me-2">
+            <i class="bi bi-person-plus me-1"></i> Add Staff
+        </button>
+        <a href="{{ route('admin.admins.index') }}" class="btn btn-outline-secondary fw-bold rounded-pill shadow px-4">
+            <i class="bi bi-x-circle me-1"></i> Cancel
+        </a>
     </form>
 </div>
 @endsection

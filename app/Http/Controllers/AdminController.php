@@ -190,4 +190,15 @@ class AdminController extends Controller
             'pastBookings' => $pastBookings,
         ]);
     }
+
+    public function logout(Request $request)
+    {
+        // Remove admin session
+        $request->session()->forget('admin_id');
+        $request->session()->forget('admin_name');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')->with('success', 'Logged out successfully.');
+    }
 }

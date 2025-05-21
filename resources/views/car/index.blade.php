@@ -2,20 +2,24 @@
 
 @section('content')
 <div class="container">
-    <div class="mb-3">
-        <a href="{{ route('admin.index') }}" class="btn btn-secondary">
-            ← Back to Homepage
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <a href="{{ route('admin.index') }}"
+           class="btn btn-warning btn-lg fw-bold rounded-pill shadow px-4 py-2"
+           style="font-size: 1.1rem;">
+            <i class="bi bi-arrow-left-circle me-2"></i>
+            Back to Homepage
         </a>
+        @if($admin->branch_id == 1 || $admin->branch_id == (isset($currentBranch) ? $currentBranch->id : $admin->branch_id))
+            <a href="{{ route('admin.cars.create') }}"
+               class="btn btn-success btn-lg fw-bold rounded-pill shadow px-4 py-2"
+               style="font-size: 1.1rem;">
+                <i class="bi bi-plus-circle me-2"></i>
+                Add New Car
+            </a>
+        @endif
     </div>
 
     <h2 class="mb-4">Manage Cars</h2>
-
-    <!-- Add Car Button: HQ and branch staff can add, but branch staff only for their branch -->
-    @if($admin->branch_id == 1 || $admin->branch_id == (isset($currentBranch) ? $currentBranch->id : $admin->branch_id))
-        <div class="mb-3">
-            <a href="{{ route('admin.cars.create') }}" class="btn btn-primary">Add New Car</a>
-        </div>
-    @endif
 
     <!-- Car List Table -->
     <div class="card">
@@ -54,11 +58,16 @@
                         </td>
                         <td>
                             @if($admin->branch_id == 1 || $car->branch_id == $admin->branch_id)
-                                <a href="{{ route('admin.cars.edit', $car->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <a href="{{ route('admin.cars.edit', $car->id) }}"
+                                   class="btn btn-warning btn-sm rounded-pill fw-bold shadow-sm me-2">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
                                 <form action="{{ route('admin.cars.destroy', $car->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Delete this car?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                    <button class="btn btn-danger btn-sm rounded-pill fw-bold shadow-sm">
+                                        <i class="bi bi-trash"></i> Delete
+                                    </button>
                                 </form>
                             @endif
                         </td>

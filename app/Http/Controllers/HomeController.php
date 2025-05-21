@@ -16,13 +16,8 @@ class HomeController extends Controller
             return redirect()->route('login');
         }
 
-        $customer = null;
-        if ($request->has('customer_id')) {
-            $customer = Customer::find($request->customer_id);
-        }
-        if (!$customer) {
-            $customer = Customer::first();
-        }
+        $customerId = session('customer_id');
+        $customer = Customer::find($customerId);
 
         // Get the latest booking for this customer
         $latestBooking = null;

@@ -10,9 +10,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Auth\LoginController;
 
 // Public welcome page
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
 // Customer Registration
 Route::get('/register', [CustomerController::class, 'create'])->name('auth.register');
@@ -28,20 +26,15 @@ Route::get('/admin/login', [AdminController::class, 'showLoginForm'])->name('adm
 Route::post('/admin/login', [AdminController::class, 'login'])->name('admin.login.submit');
 Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 
-// Customer Dashboard
+// Dashboards
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
 
 // Customer Bookings
-Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
-Route::get('/bookings/create', [BookingController::class, 'create'])->name('bookings.create');
-Route::post('/bookings', [BookingController::class, 'store'])->name('bookings.store');
-Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
-Route::get('/bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-Route::put('/bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
-Route::delete('/bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
-
-// Admin Dashboard (summary page)
-Route::get('/admin/index', [AdminController::class, 'index'])->name('admin.index');
+Route::resource('bookings', BookingController::class)->except(['edit', 'update', 'destroy']);
+Route::get('bookings/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+Route::put('bookings/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+Route::delete('bookings/{booking}', [BookingController::class, 'destroy'])->name('bookings.destroy');
 
 // Admin Bookings Page (all bookings, admin view)
 Route::get('/admin/bookings', [BookingController::class, 'adminIndex'])->name('admin.bookings.index');
@@ -53,8 +46,5 @@ Route::resource('/admin/cars', CarController::class)->names('admin.cars');
 Route::resource('/admin/branches', BranchController::class)->names('admin.branches');
 Route::resource('/admin/bookings', BookingController::class)->except(['store', 'create', 'index'])->names('admin.bookings');
 
-// Admin Booking Update (manual route)
-Route::put('/admin/bookings/{id}', [AdminController::class, 'update'])->name('admin.bookings.update');
-
-// Admin Create Staff
+// Admin Create Staff (if needed)
 Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');

@@ -1,2 +1,3 @@
 "Hello Git" 
 "Git is awesome" 
+"Feature 1 in progress" 

@@ -54,7 +54,7 @@ Route::resource('/admin/branches', BranchController::class)->names('admin.branch
 Route::resource('/admin/bookings', BookingController::class)->except(['store', 'create', 'index'])->names('admin.bookings');
 
 // Admin Booking Update (manual route)
-Route::put('/admin/bookings/{id}', [AdminController::class, 'updateBooking'])->name('admin.bookings.updateBooking');
+Route::put('/admin/bookings/{id}', [AdminController::class, 'update'])->name('admin.bookings.update');
 
 // Admin Create Staff
 Route::get('/admin/create', [AdminController::class, 'create'])->name('admin.create');

@@ -16,11 +16,15 @@ class CarController extends Controller
     public function index(Request $request)
     {
         // If you want to filter by branch, use ?branch_id=xx in the URL
+        $carsQuery = Car::query();
         if ($request->has('branch_id')) {
-            $cars = Car::where('branch_id', $request->branch_id)->get();
-        } else {
-            $cars = Car::all();
+            $carsQuery->where('branch_id', $request->branch_id);
         }
+
+        // Filter by status 'Available' by default
+        $carsQuery->where('status', 'Available');
+
+        $cars = $carsQuery->get();
 
         $admin = Admin::find(session('admin_id'));
 

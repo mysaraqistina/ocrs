@@ -12,6 +12,10 @@ class AdminController extends Controller
 {
     public function index(Request $request)
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         // Example: Get current admin (adjust this to your actual authentication/session logic)
         $admin = Admin::find($request->user()->id ?? 1); // Replace with your actual admin retrieval logic
 
@@ -36,6 +40,10 @@ class AdminController extends Controller
 
     public function create()
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         $admin = Admin::find(session('admin_id'));
         if (!$admin || $admin->branch_id != 1) {
             abort(404);
@@ -47,6 +55,10 @@ class AdminController extends Controller
 
     public function store(Request $request)
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         $request->validate([
             'branch_id' => 'required|exists:branches,id',
             'name' => 'required|string|max:255',
@@ -66,21 +78,33 @@ class AdminController extends Controller
 
     public function show(Admin $admin)
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         return view('admin.show', compact('admin'));
     }
 
     public function edit(Admin $admin)
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         return view('admin.edit', compact('admin'));
     }
 
     public function update(Request $request, $id)
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         $booking = Booking::findOrFail($id);
         $action = $request->input('action');
 
         if ($action === 'approve') {
-            $booking->status = 'approved';
+            $booking->status = 'confirmed';
             $booking->save();
 
             // Set the car as not available
@@ -88,21 +112,23 @@ class AdminController extends Controller
             $car->status = 'Not Available';
             $car->save();
 
-            return redirect()->back()->with('success', 'Booking approved.');
-        }
-
-        if ($action === 'reject') {
+            return redirect()->route('admin.bookings.index')->with('success', 'Booking confirmed and car marked as not available.');
+        } elseif ($action === 'reject') {
             $booking->status = 'rejected';
             $booking->save();
 
-            return redirect()->back()->with('success', 'Booking rejected.');
+            return redirect()->route('admin.bookings.index')->with('success', 'Booking rejected.');
         }
 
-        return redirect()->back()->with('error', 'Invalid action.');
+        return redirect()->route('admin.bookings.index');
     }
 
     public function destroy(Admin $admin)
     {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
         $admin->delete();
         return redirect()->route('admin.index')->with('success', 'Admin deleted successfully.');
     }
@@ -128,5 +154,40 @@ class AdminController extends Controller
         return back()->withErrors([
             'email' => 'Invalid login credentials.',
         ])->withInput();
+    }
+
+    public function bookingsIndex(Request $request)
+    {
+        if (!session()->has('admin_id')) {
+            return redirect()->route('admin.login');
+        }
+
+        $admin = Admin::find($request->user()->id ?? 1);
+
+        // Fetch bookings based on the admin's branch
+        $currentBooking = null;
+        $upcomingBookings = null;
+        $pastBookings = null;
+
+        if ($admin) {
+            $currentBooking = Booking::where('branch_id', $admin->branch_id)
+                ->where('start_time', '<=', now())
+                ->where('end_time', '>=', now())
+                ->first();
+
+            $upcomingBookings = Booking::where('branch_id', $admin->branch_id)
+                ->where('start_time', '>', now())
+                ->get();
+
+            $pastBookings = Booking::where('branch_id', $admin->branch_id)
+                ->where('end_time', '<', now())
+                ->get();
+        }
+
+        return view('booking.index', [
+            'currentBooking' => $currentBooking,
+            'upcomingBookings' => $upcomingBookings,
+            'pastBookings' => $pastBookings,
+        ]);
     }
 }

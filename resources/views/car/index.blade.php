@@ -36,7 +36,6 @@
                 </thead>
                 <tbody>
                 @forelse($cars as $car)
-                    @if($admin->branch_id == 1 || $car->branch_id == $admin->branch_id)
                     <tr>
                         <td>
                             <img src="{{ asset('images/' . $car->image) }}" alt="Car Image" width="80" height="50" style="object-fit:cover;">
@@ -47,7 +46,7 @@
                         <td>{{ $car->transmission }}</td>
                         <td>{{ $car->branch->name }}</td>
                         <td>
-                            @if($car->status == 'Available')
+                            @if($car->status == 'available')
                                 <span class="badge bg-success">Available</span>
                             @else
                                 <span class="badge bg-danger">Unavailable</span>
@@ -64,7 +63,6 @@
                             @endif
                         </td>
                     </tr>
-                    @endif
                 @empty
                     <tr>
                         <td colspan="8" class="text-center">No cars found.</td>

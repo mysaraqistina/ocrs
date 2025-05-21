@@ -22,13 +22,13 @@
                     @if($latestBooking)
                         Start Date: {{ $latestBooking->start_date }}<br>
                         End Date: {{ $latestBooking->end_date }}<br>
-                        Car Brand: {{ $latestBooking->car->brand ?? 'N/A' }}<br>
-                        Car Type: {{ $latestBooking->car->type ?? 'N/A' }}<br>
+                        Car: {{ $latestBooking->car->brand ?? 'N/A' }} {{ $latestBooking->car->model ?? 'N/A' }}<br>
+                        Status: {{ $latestBooking->status == 'pending' ? 'Pending' : ($latestBooking->status == 'confirmed' ? 'Confirmed' : 'Cancelled') }}<br>
                     @else
                         Start Date: N/A<br>
                         End Date: N/A<br>
-                        Car Brand: N/A<br>
-                        Car Type: N/A<br>
+                        Car: N/A<br>
+                        Status: N/A<br>
                     @endif
                 </div>
             </div>
@@ -80,7 +80,10 @@
         @forelse($cars as $car)
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow-sm">
-                    <img src="{{ $car->image ? asset('images/' . $car->image) : asset('images/default-car.png') }}" class="card-img-top" alt="{{ $car->brand }} {{ $car->model }}">
+                    <img src="{{ $car->image ? asset('images/' . $car->image) : asset('images/default-car.png') }}"
+                         class="card-img-top"
+                         alt="{{ $car->brand }} {{ $car->model }}"
+                         style="width: 100%; height: 180px; object-fit: cover;">
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title">{{ $car->brand }} {{ $car->model }}</h5>
                         <p class="card-text mb-2">

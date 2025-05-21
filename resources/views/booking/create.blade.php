@@ -8,6 +8,12 @@
     </div>
 @endif
 
+@if($errors->has('start_date'))
+    <div class="alert alert-danger">
+        {{ $errors->first('start_date') }}
+    </div>
+@endif
+
 <form action="{{ route('bookings.store') }}" method="POST">
     @csrf
 

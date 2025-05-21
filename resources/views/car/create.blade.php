@@ -55,7 +55,7 @@
             <label for="status" class="form-label">Status</label>
             <select name="status" id="status" class="form-control" required>
                 <option value="available" {{ isset($car) && $car->status == 'available' ? 'selected' : '' }}>Available</option>
-                <option value="unavailable" {{ isset($car) && $car->status == 'unavailable' ? 'selected' : '' }}>Unavailable</option>
+                <option value="unavailable" {{ isset($car) && $car->status == 'Unavailable' ? 'selected' : '' }}>Unavailable</option>
             </select>
         </div>
 

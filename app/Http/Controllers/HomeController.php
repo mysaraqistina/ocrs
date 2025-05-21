@@ -12,6 +12,10 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
+        if (!session()->has('customer_id')) {
+            return redirect()->route('login');
+        }
+
         $customer = null;
         if ($request->has('customer_id')) {
             $customer = Customer::find($request->customer_id);
@@ -41,7 +45,9 @@ class HomeController extends Controller
             $carsQuery->where('brand', $request->brand);
         }
 
-        $cars = $carsQuery->where('status', 'Available')->get();
+        $carsQuery->where('status', 'Available');
+
+        $cars = $carsQuery->get();
 
         return view('home', [
             'customer' => $customer,

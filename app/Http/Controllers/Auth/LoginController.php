@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -58,5 +59,24 @@ class LoginController extends Controller
         throw ValidationException::withMessages([
             $this->username() => [$message],
         ]);
+    }
+
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        $user = Customer::where('email', $request->email)->first();
+
+        if ($user && Hash::check($request->password, $user->password)) {
+            session(['customer_id' => $user->id]);
+            return redirect()->route('home');
+        } else {
+            return back()->withErrors([
+                'email' => 'The provided credentials do not match our records.',
+            ]);
+        }
     }
 }

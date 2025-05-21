@@ -1,3 +1,5 @@
+<!--landing page for Easy Car Enterprise-->
+
 @extends('layouts.app')
 
 @section('content')

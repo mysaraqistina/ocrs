@@ -1,3 +1,5 @@
+<!-- layout for the application -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,18 +155,7 @@
     <main class="py-4">
         <div class="container">
             <div class="row g-4">
-                <!-- Optional Sidebar (remove if not needed) -->
-                <!--
-                <div class="col-md-3 d-none d-md-block">
-                    <div class="sidebar p-3 shadow">
-                        <nav class="nav flex-column">
-                            <a class="nav-link active" href="#"><i class="bi bi-speedometer2"></i> Dashboard</a>
-                            <a class="nav-link" href="#"><i class="bi bi-calendar-check"></i> Bookings</a>
-                            <a class="nav-link" href="#"><i class="bi bi-car-front"></i> Cars</a>
-                        </nav>
-                    </div>
-                </div>
-                -->
+                
                 <div class="col-12">
                     <div class="dashboard-card bg-white p-4">
                         @yield('content')
@@ -174,7 +165,7 @@
         </div>
     </main>
     <footer class="text-center py-4 mt-5 text-muted small">
-        <i class="bi bi-c-circle"></i> {{ date('Y') }} Easy Car Enterprise. All rights reserved.
+        <i class="bi bi-c-circle"></i> <span style="color: #fff;">{{ date('Y') }} Easy Car Enterprise. All rights reserved.</span>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"></script>
 </body>

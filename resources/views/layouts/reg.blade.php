@@ -1,3 +1,5 @@
+<!-- layout for registration page -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

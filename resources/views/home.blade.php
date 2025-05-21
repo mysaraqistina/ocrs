@@ -1,3 +1,5 @@
+<!-- landing page for customer -->
+ 
 @extends('layouts.dashboard')
 
 @section('content')

@@ -1,3 +1,6 @@
+<!-- layout for landing page -->
+
+
 <!doctype html>
 <head>
     <meta charset="utf-8">

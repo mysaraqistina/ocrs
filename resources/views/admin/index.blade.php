@@ -75,13 +75,5 @@
             </table>
         </div>
     </div>
-
-    <!-- Logout Form 
-    <div class="mt-4">
-        <form action="{{ route('admin.logout') }}" method="POST">
-            @csrf
-            <button type="submit" class="btn btn-danger">Logout</button>
-        </form>
-    </div>-->
 </div>
 @endsection

@@ -69,7 +69,7 @@
                                 <i class="bi bi-car-front-fill display-4 text-primary"></i>
                             </div>
                             <h5 class="card-title">Wide Selection</h5>
-                            <p class="card-text">Choose from SUV, Sedan more to fit your needs.</p>
+                            <p class="card-text">Choose from various types of cars to fit your needs.</p>
                         </div>
                     </div>
                 </div>

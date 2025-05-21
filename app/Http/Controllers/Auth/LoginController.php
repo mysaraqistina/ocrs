@@ -3,64 +3,28 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
-    use AuthenticatesUsers;
-
-    /**
-     * Where to redirect users after login — overridden in authenticated() method.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home'; // will be ignored
-
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth:customer')->only('logout');
     }
 
     /**
-     * Use the 'customer' guard instead of the default 'web'.
+     * Show the customer login form.
      */
-    protected function guard()
+    public function showLoginForm()
     {
-        return Auth::guard('customer');
+        return view('auth.login');
     }
 
     /**
-     * Redirect after successful login.
+     * Handle a login request to the application.
      */
-    protected function authenticated(Request $request, $user)
-    {
-        return redirect()->route('home');
-    }
-
-    /**
-     * Override failed login response with a custom message.
-     */
-    protected function sendFailedLoginResponse(Request $request)
-    {
-        $customer = Customer::where('email', $request->email)->first();
-
-        if (!$customer) {
-            $message = 'Customer email not found.';
-        } else {
-            $message = 'Incorrect password.';
-        }
-
-        throw ValidationException::withMessages([
-            $this->username() => [$message],
-        ]);
-    }
-
     public function login(Request $request)
     {
         $request->validate([
@@ -79,5 +43,15 @@ class LoginController extends Controller
                 'email' => 'The provided credentials do not match our records.',
             ]);
         }
+    }
+
+    /**
+     * Log the customer out.
+     */
+    public function logout(Request $request)
+    {
+        $request->session()->forget('customer_id');
+        $request->session()->flush();
+        return redirect()->route('login');
     }
 }

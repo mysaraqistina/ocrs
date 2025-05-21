@@ -16,8 +16,8 @@ class AdminController extends Controller
             return redirect()->route('admin.login');
         }
 
-        // Example: Get current admin (adjust this to your actual authentication/session logic)
-        $admin = Admin::find($request->user()->id ?? 1); // Replace with your actual admin retrieval logic
+        // Get current admin 
+        $admin = Admin::find($request->user()->id ?? 1); 
 
         $branches = Branch::withCount([
             'cars',
@@ -144,7 +144,7 @@ class AdminController extends Controller
         if ($admin && password_verify($request->password, $admin->password)) {
             // Store admin ID in session
             $request->session()->put('admin_id', $admin->id);
-            // Optionally store admin name or branch_id if you use them
+            // Optionally store admin name or branch_id if needed
             $request->session()->put('admin_name', $admin->name);
             $request->session()->put('admin_branch_id', $admin->branch_id);
 

@@ -1,5 +1,4 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,15 +17,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
         body {
-            /* Deep luxury gradient with gold accent */
+            font-family: 'Montserrat', 'Nunito', Arial, sans-serif;
             background: linear-gradient(135deg, #181818 0%, #232526 60%, #bfa14a 120%);
             min-height: 100vh;
-            position: relative;
             color: #f5f5f5;
+            position: relative;
+            letter-spacing: 0.03em;
         }
 
-        /* Subtle diamond pattern overlay for depth */
+        /* Subtle carbon fiber pattern overlay */
         body::before {
             content: "";
             position: fixed;
@@ -34,47 +36,82 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: url('https://www.transparenttextures.com/patterns/diamond-upholstery.png');
-            opacity: 0.12;
+            background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+            opacity: 0.13;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* Premium card styling */
-        .card, .bg-gradient {
+        /* Glassmorphism effect for cards and navbar */
+        .card, .glass, .navbar {
+            background: rgba(35, 37, 38, 0.82) !important;
+            backdrop-filter: blur(6px);
             border-radius: 1.5rem !important;
             box-shadow: 0 8px 32px 0 rgba(191, 161, 74, 0.18);
-            background: rgba(35, 37, 38, 0.97) !important;
             border: 1px solid #bfa14a33;
             color: #f5f5f5;
+            transition: box-shadow 0.3s;
+        }
+        .card:hover, .glass:hover {
+            box-shadow: 0 12px 36px 0 rgba(191, 161, 74, 0.28);
         }
 
-        /* Gold accent for headings and brand */
-        .navbar-brand, .display-4, .fw-bold, .card-title {
+        /* Navbar brand and gold accent */
+        .navbar-brand, .navbar-brand span, .display-4, .fw-bold, .card-title {
+            color: #e7c873 !important;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-shadow: 0 2px 12px #bfa14a33;
+        }
+
+        /* Navbar glass effect and gold underline on active/hover */
+        .navbar {
+            border-bottom: 2px solid #bfa14a44;
+            box-shadow: 0 4px 24px 0 rgba(191, 161, 74, 0.08);
+        }
+        .navbar-nav .nav-link {
+            color: #f5f5f5 !important;
+            font-weight: 500;
+            font-size: 1.08rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            position: relative;
+            transition: color 0.2s, background 0.2s;
+        }
+        .navbar-nav .nav-link.active,
+        .navbar-nav .nav-link:hover {
             color: #bfa14a !important;
-            letter-spacing: 1px;
+            background: rgba(191, 161, 74, 0.08);
+        }
+        .navbar-nav .nav-link.active::after,
+        .navbar-nav .nav-link:hover::after {
+            content: "";
+            display: block;
+            margin: 0 auto;
+            width: 60%;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, #bfa14a 0%, #fffbe6 100%);
+            margin-top: 4px;
+            box-shadow: 0 2px 8px #bfa14a55;
         }
 
-        /* Gold accent for nav links on hover */
-        .navbar-dark .navbar-nav .nav-link:hover,
-        .navbar-dark .navbar-nav .nav-link.active {
-            color: #bfa14a !important;
-            text-shadow: 0 1px 8px #bfa14a33;
-        }
-
-        /* Gold buttons for CTAs */
+        /* Premium button styling */
         .btn-warning, .btn-warning:focus, .btn-warning:active {
-            background-color: #bfa14a !important;
-            border-color: #bfa14a !important;
+            background: linear-gradient(90deg, #bfa14a 0%, #fffbe6 100%) !important;
+            border: none !important;
             color: #232526 !important;
             font-weight: bold;
             letter-spacing: 0.5px;
             box-shadow: 0 2px 12px #bfa14a33;
+            border-radius: 2rem;
+            padding: 0.6rem 2rem;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
         }
         .btn-warning:hover {
-            background-color: #a88b32 !important;
-            border-color: #a88b32 !important;
+            background: linear-gradient(90deg, #a88b32 0%, #bfa14a 100%) !important;
             color: #fff !important;
+            box-shadow: 0 4px 18px #bfa14a55;
         }
 
         /* Carousel image styling */
@@ -82,6 +119,7 @@
             height: 350px;
             object-fit: cover;
             border-radius: 1.5rem;
+            box-shadow: 0 4px 24px #000a;
         }
 
         /* Carousel caption styling */
@@ -90,6 +128,29 @@
             border-radius: 1rem;
             color: #bfa14a !important;
             font-weight: 500;
+            text-shadow: 0 2px 12px #18181877;
+        }
+
+        /* Footer styling */
+        footer {
+            color: #bfa14a;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            background: transparent;
+            border-top: 1px solid #bfa14a33;
+            margin-top: 2rem;
+            padding: 1.5rem 0 0.5rem 0;
+            text-align: center;
+        }
+
+        /* Custom scroll bar for luxury feel */
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: #232526;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #bfa14a 0%, #232526 100%);
+            border-radius: 8px;
         }
     </style>
 </head>
